@@ -125,6 +125,7 @@ def correct_answer():
     global question, score, num1, num2, true_ans, dots
     score += 0.1
     score = round(score,1)
+    sounds.correct_sound.play()
     num1, num2, true_ans = get_input_output()
     question = get_question(num1, num2, true_ans)
     dots = get_dots(num1, num2)
