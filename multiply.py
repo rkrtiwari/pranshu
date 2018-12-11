@@ -91,6 +91,7 @@ num1, num2, true_ans = get_input_output()
 question = get_question(num1, num2, true_ans)
 dots = get_dots(num1, num2)
 
+bounding_box = Rect(180,580,200, 20)
     
 def draw():
         
@@ -106,6 +107,8 @@ def draw():
 
     screen.draw.filled_rect(hint_box, "green")
     screen.draw.text("Hint", (500, 550), color="black", fontsize = 50)
+
+    screen.draw.rect(bounding_box, "red")
 
     
     
@@ -135,6 +138,7 @@ def wrong_answer():
     global question, score, num1, num2, true_ans, dots
     score -= 0.1
     score = round(score,1)
+    sounds.wrong_sound.play()
     num1, num2, true_ans = get_input_output()
     question = get_question(num1, num2, true_ans)
     dots = get_dots(num1, num2)
