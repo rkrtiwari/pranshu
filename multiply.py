@@ -91,8 +91,12 @@ num1, num2, true_ans = get_input_output()
 question = get_question(num1, num2, true_ans)
 dots = get_dots(num1, num2)
 
-bounding_box = Rect(180,580,200, 20)
+bounding_boxes = []
+for i in range(num2):
+    bounding_box = Rect(180, 582+3*(i+1), num1*40, (i+1)*33)
+    bounding_boxes.append(bounding_box)
     
+        
 def draw():
         
     screen.fill("dim gray")
@@ -108,9 +112,9 @@ def draw():
     screen.draw.filled_rect(hint_box, "green")
     screen.draw.text("Hint", (500, 550), color="black", fontsize = 50)
 
-    screen.draw.rect(bounding_box, "red")
-
-    
+    for box in bounding_boxes:
+        screen.draw.rect(box, "red")
+            
     
     for dot in dots:
         dot.draw()
