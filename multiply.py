@@ -87,14 +87,19 @@ def get_question(num1, num2, true_ans):
     question = get_all_list(ques_list, ans_list)
     return question
 
+
+def get_bounding_boxes(num1, num2):
+    bounding_boxes = []    
+    for i in range(num2):
+        bounding_box = Rect(180, 588 + i*35 + (i-1)*5, num1*40, 35)
+        bounding_boxes.append(bounding_box)
+    return bounding_boxes
+
 num1, num2, true_ans = get_input_output()
 question = get_question(num1, num2, true_ans)
 dots = get_dots(num1, num2)
+bounding_boxes = get_bounding_boxes(num1, num2)
 
-bounding_boxes = []
-for i in range(num2):
-    bounding_box = Rect(180, 582+3*(i+1), num1*40, (i+1)*33)
-    bounding_boxes.append(bounding_box)
     
         
 def draw():
@@ -113,7 +118,7 @@ def draw():
     screen.draw.text("Hint", (500, 550), color="black", fontsize = 50)
 
     for box in bounding_boxes:
-        screen.draw.rect(box, "red")
+        screen.draw.filled_rect(box, "red")
             
     
     for dot in dots:
@@ -128,24 +133,28 @@ def draw():
         screen.draw.textbox(question[index], box, color = ('black'))
         index = index + 1
 
+    
+
 def correct_answer():
-    global question, score, num1, num2, true_ans, dots
+    global question, score, num1, num2, true_ans, dots, bounding_boxes
     score += 0.1
     score = round(score,1)
     sounds.correct_sound.play()
     num1, num2, true_ans = get_input_output()
     question = get_question(num1, num2, true_ans)
     dots = get_dots(num1, num2)
+    bounding_boxes = get_bounding_boxes(num1, num2)
     
 
 def wrong_answer():
-    global question, score, num1, num2, true_ans, dots
+    global question, score, num1, num2, true_ans, dots, bounding_boxes
     score -= 0.1
     score = round(score,1)
     sounds.wrong_sound.play()
     num1, num2, true_ans = get_input_output()
     question = get_question(num1, num2, true_ans)
     dots = get_dots(num1, num2)
+    bounding_boxes = get_bounding_boxes(num1, num2)
     
 def on_mouse_down(pos):
     index = 1
