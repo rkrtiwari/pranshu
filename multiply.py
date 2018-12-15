@@ -16,13 +16,13 @@ def get_input_output():
 
 def get_dots(num1, num2):
     dots = []
-    X = 200
-    Y = 600
+    X = 190
+    Y = 610
     
-    for i in range(0, num1):
-        for j in range(0, num2):
+    for i in range(0, num2):
+        for j in range(0, num1):
             actor = Actor("dot")
-            actor.pos = X + i*40, Y + j*40
+            actor.pos = X + i*80, Y + j*40
             dots.append(actor)
     return dots
 
@@ -91,7 +91,7 @@ def get_question(num1, num2, true_ans):
 def get_bounding_boxes(num1, num2):
     bounding_boxes = []    
     for i in range(num2):
-        bounding_box = Rect(180, 588 + i*35 + (i-1)*5, num1*40, 35)
+        bounding_box = Rect(215 + i*35 + (i-1)*45, 595, 40, num1*38)
         bounding_boxes.append(bounding_box)
     return bounding_boxes
 
@@ -111,11 +111,23 @@ def draw():
     screen.draw.textbox(question[0], main_box, color = ('black'))
 
     screen.draw.filled_rect(score_box, "sky blue")
-    text = 'Reward: $' + str(score)
+#    text = 'Reward: $' + str(score)
+    text = str(score)
     screen.draw.textbox(text, score_box, color = ('black'))
 
     screen.draw.filled_rect(hint_box, "green")
-    screen.draw.text("Hint", (500, 550), color="black", fontsize = 50)
+    screen.draw.text("Hint", (550, 550), color="black", fontsize = 50)
+    for j in range(num2):
+        if j == (num2-1):
+            screen.draw.text(str(num1), (180 + j*80, 560), color="black", fontsize = 50)
+        else:
+            screen.draw.text(str(num1)+ '   +', (180 + j*80, 560), color="black", fontsize = 50)
+            
+        
+        
+        
+        
+    
 
     for box in bounding_boxes:
         screen.draw.filled_rect(box, "red")
@@ -137,8 +149,8 @@ def draw():
 
 def correct_answer():
     global question, score, num1, num2, true_ans, dots, bounding_boxes
-    score += 0.1
-    score = round(score,1)
+    score += 1
+#    score = round(score,1)
     sounds.correct_sound.play()
     num1, num2, true_ans = get_input_output()
     question = get_question(num1, num2, true_ans)
@@ -148,7 +160,7 @@ def correct_answer():
 
 def wrong_answer():
     global question, score, num1, num2, true_ans, dots, bounding_boxes
-    score -= 0.1
+    score -= 1
     score = round(score,1)
     sounds.wrong_sound.play()
     num1, num2, true_ans = get_input_output()
